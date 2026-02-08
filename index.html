@@ -1,5 +1,3 @@
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +27,7 @@ body{
   position:relative;
 }
 
-/* GLOWING STARS */
+/* STARS */
 .star{
   position:fixed;
   width:3px;
@@ -44,7 +42,7 @@ body{
   to{opacity:1;transform:scale(1.4);}
 }
 
-/* IMAGE SLIDER */
+/* SLIDER */
 .slider{
   width:90%;
   max-width:360px;
@@ -86,7 +84,7 @@ body{
   font-size:22px;
   line-height:1.6;
   margin-top:10px;
-  min-height:100px;
+  min-height:110px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -149,19 +147,18 @@ button{
   animation:fadeIn 2s ease forwards;
   opacity:0;
 }
-
 @keyframes fadeIn{to{opacity:1;}}
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND MUSIC -->
+<!-- MUSIC -->
 <audio autoplay loop>
   <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1a77.mp3" type="audio/mpeg">
 </audio>
 
-<!-- STORY SECTION -->
+<!-- STORY -->
 <div class="section" id="storySection">
 
   <div class="slider">
@@ -174,6 +171,7 @@ button{
 
   <div class="story" id="storyText"></div>
 
+  <!-- CONTINUE BUTTON ALWAYS VISIBLE -->
   <button onclick="nextStory()">Continue →</button>
 </div>
 
@@ -184,7 +182,7 @@ button{
   <button class="no" id="noBtn">NO 😜</button>
 </div>
 
-<!-- RING MODAL -->
+<!-- RING -->
 <div id="ringModal">
   <div class="ring">💍</div>
   <div class="loveText">I love you forever my wife 😘❤️</div>
@@ -192,18 +190,18 @@ button{
 
 <script>
 
-/* LOVE STORY TEXTS */
+/* ❤️ CORRECT STORY ORDER */
 const texts=[
-"You turned ordinary days into memories I never want to outgrow.",
-"Some stay like a habit.",
-"Even silence feels kinder when it knows your name.",
-"And some become the reason your soul feels at home.",
 "Some people enter your life like a moment.",
-"And in every lifetime, in every version of me… it’s you, Baby ❤️",
-"I don’t look for forever anymore, because I found it once.",
+"Some stay like a habit.",
+"And some become the reason your soul feels at home.",
+"You turned ordinary days into memories I never want to outgrow.",
+"Even silence feels kinder when it knows your name.",
 "In your laughter, I found comfort.",
+"In your presence, I found peace.",
 "In your absence, I learned how deeply I love.",
-"In your presence, I found peace."
+"I don’t look for forever anymore, because I found it once.",
+"And in every lifetime, in every version of me… it’s you, Baby ❤️"
 ];
 
 let index=0;
@@ -212,11 +210,12 @@ storyText.innerText=texts[0];
 
 function nextStory(){
   const slides=document.querySelectorAll(".slide");
-  slides[index%slides.length].classList.remove("active");
+
+  slides[index % slides.length].classList.remove("active");
   index++;
 
-  if(index<texts.length){
-    slides[index%slides.length].classList.add("active");
+  if(index < texts.length){
+    slides[index % slides.length].classList.add("active");
     storyText.innerText=texts[index];
   }else{
     document.getElementById("storySection").style.display="none";
@@ -224,15 +223,7 @@ function nextStory(){
   }
 }
 
-/* SWIPE GESTURE */
-let startX=0;
-document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-document.addEventListener("touchend",e=>{
-  let diff=startX-e.changedTouches[0].clientX;
-  if(Math.abs(diff)>50) nextStory();
-});
-
-/* RUNNING NO */
+/* RUNNING NO BUTTON */
 const noBtn=document.getElementById("noBtn");
 noBtn.onmouseover=()=>{
   noBtn.style.top=Math.random()*80+"%";
@@ -244,7 +235,7 @@ function showRing(){
   document.getElementById("ringModal").style.display="flex";
 }
 
-/* GLOWING STARS */
+/* ✨ STARS */
 for(let i=0;i<60;i++){
   const s=document.createElement("div");
   s.className="star";
