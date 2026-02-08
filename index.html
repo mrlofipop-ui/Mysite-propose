@@ -6,55 +6,35 @@
 <title>For My Baby ❤️</title>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-  margin:0;
   font-family:"Poppins",sans-serif;
-  background:#000;
-  color:white;
-  overflow:hidden;
+  background:linear-gradient(160deg,#ffe4ec,#f5e6ff,#e6f0ff);
+  overflow-x:hidden;
+  color:#6b2d3a;
 }
 
-/* sections */
+/* SECTION */
 .section{
-  height:100vh;
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  padding:30px 20px;
   text-align:center;
-  padding:20px;
 }
 
-.intro{
-  background:linear-gradient(135deg,#ff758c,#ff7eb3);
-}
-
-/* buttons */
-button{
-  padding:14px 28px;
-  font-size:18px;
-  border:none;
-  border-radius:30px;
-  cursor:pointer;
-  margin-top:20px;
-}
-
-.yes{background:#4CAF50;color:white;}
-.no{
-  background:#ff4b5c;
-  color:white;
-  position:absolute;
-}
-
-/* romantic image slider */
+/* SLIDER */
 .slider{
-  position:relative;
   width:90%;
-  max-width:360px;
-  height:70vh;
-  border-radius:24px;
+  max-width:380px;
+  height:60vh;
+  border-radius:26px;
   overflow:hidden;
-  box-shadow:0 0 40px rgba(255,120,160,.5);
+  box-shadow:0 20px 50px rgba(255,120,160,.35);
+  position:relative;
 }
 
 .slide{
@@ -63,65 +43,71 @@ button{
   height:100%;
   object-fit:cover;
   opacity:0;
-  transition:1.5s ease;
+  transition:1.4s ease;
 }
-
 .slide.active{opacity:1;}
 
-/* romantic text */
-.love-text{
-  margin-top:18px;
-  font-size:18px;
+/* HEART ANIMATION */
+.heart{
+  font-size:40px;
+  animation:beat 1s infinite;
+  margin:15px 0;
+}
+@keyframes beat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.25);}
+}
+
+/* STORY TEXT */
+.story{
+  max-width:360px;
+  font-size:20px;
   line-height:1.6;
-  max-width:320px;
-  color:#ffdbe6;
-  animation:fadeIn 2s ease;
+  margin-top:15px;
+  min-height:80px;
+  transition:0.5s;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+/* BUTTON */
+button{
+  margin-top:25px;
+  padding:14px 32px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(45deg,#ff5e8a,#ff9bb3);
+  box-shadow:0 8px 20px rgba(255,100,150,.4);
 }
 
-/* confetti */
+/* PROPOSAL */
+#proposal h1{
+  font-size:30px;
+  margin-bottom:20px;
+}
+
+/* RUNNING NO */
+.no{
+  position:absolute;
+  background:#ddd;
+  color:#333;
+}
+
+/* CONFETTI CANVAS */
 canvas{
   position:fixed;
   top:0;
   left:0;
   pointer-events:none;
 }
-
-/* 🌹 Falling petals */
-.petal{
-  position:fixed;
-  top:-40px;
-  width:24px;
-  height:24px;
-  background-image:url("https://pngimg.com/uploads/rose_petals/rose_petals_PNG24.png");
-  background-size:cover;
-  pointer-events:none;
-  animation:fall linear forwards;
-  z-index:9999;
-}
-
-@keyframes fall{
-  0%{transform:translateY(-40px) rotate(0deg); opacity:1;}
-  100%{transform:translateY(110vh) rotate(360deg); opacity:.9;}
-}
 </style>
 </head>
 
 <body>
 
-<!-- Intro -->
-<div class="section intro">
-  <h1>Hi Riya ❤️</h1>
-  <h2>From Sachin</h2>
-  <button onclick="start()">Tap to continue</button>
-</div>
-
-<!-- Slider -->
-<div class="section" id="slides" style="display:none;">
+<!-- PHOTO + STORY -->
+<div class="section" id="storySection">
 
   <div class="slider">
     <img class="slide active" src="20260124_142938.jpg">
@@ -129,63 +115,64 @@ canvas{
     <img class="slide" src="20260124_144942.jpg">
   </div>
 
-  <div class="love-text">
-    Every moment with you feels like a beautiful dream 💫  
-    Your smile makes my world brighter 🌍  
-    And today… I just want to ask something from my heart ❤️
+  <div class="heart">❤️</div>
+
+  <div class="story" id="storyText">
+    Some people enter your life like a moment…
   </div>
+
+  <button onclick="nextStory()">Continue →</button>
 
 </div>
 
-<!-- Proposal -->
+
+<!-- PROPOSAL -->
 <div class="section" id="proposal" style="display:none;">
   <h1>Will you be mine forever? 💍</h1>
-  <button class="yes" onclick="celebrate()">YES 💖</button>
+  <button onclick="celebrate()">YES 💖</button>
   <button class="no" id="noBtn">NO 😜</button>
 </div>
 
 <canvas id="confetti"></canvas>
 
 <script>
-/* start slideshow */
-function start(){
-  document.querySelector(".intro").style.display="none";
-  document.getElementById("slides").style.display="flex";
-  showSlides();
+
+/* STORY TEXT LIST */
+const texts = [
+"Some stay like a habit…",
+"Even silence feels kinder when it knows your name…",
+"And some become the reason your soul feels at home…",
+"And in every lifetime… it’s you, Baby ❤️"
+];
+
+let index = 0;
+
+/* SLIDE CHANGE */
+function nextStory(){
+
+  const slides = document.querySelectorAll(".slide");
+  slides[index]?.classList.remove("active");
+
+  index++;
+
+  if(index < slides.length){
+    slides[index].classList.add("active");
+    document.getElementById("storyText").innerText = texts[index-1] || "";
+  }
+  else{
+    document.getElementById("storySection").style.display="none";
+    document.getElementById("proposal").style.display="flex";
+  }
 }
 
-/* slide animation */
-function showSlides(){
-  let slides=document.querySelectorAll(".slide");
-  let i=0;
-
-  setInterval(()=>{
-    slides[i].classList.remove("active");
-    i++;
-
-    if(i>=slides.length){
-      document.getElementById("slides").style.display="none";
-      document.getElementById("proposal").style.display="flex";
-      return;
-    }
-
-    slides[i].classList.add("active");
-  },3000);
-}
-
-/* running NO button */
-const noBtn=document.getElementById("noBtn");
-noBtn.onmouseover=()=>{
-  noBtn.style.top=Math.random()*80+"%";
-  noBtn.style.left=Math.random()*80+"%";
+/* RUNNING NO BUTTON */
+const noBtn = document.getElementById("noBtn");
+noBtn.onmouseover = () => {
+  noBtn.style.top = Math.random()*80+"%";
+  noBtn.style.left = Math.random()*80+"%";
 };
 
-/* confetti celebration */
-function celebrate(){
-  startConfetti();
-  alert("Yay! I love you my baby ❤️");
-}
-
+/* CONFETTI */
 const canvas=document.getElementById("confetti");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
@@ -193,8 +180,8 @@ canvas.height=window.innerHeight;
 
 let pieces=[];
 
-function startConfetti(){
-  for(let i=0;i<160;i++){
+function celebrate(){
+  for(let i=0;i<150;i++){
     pieces.push({
       x:Math.random()*canvas.width,
       y:Math.random()*canvas.height,
@@ -202,6 +189,7 @@ function startConfetti(){
     });
   }
   requestAnimationFrame(update);
+  alert("Yay! I love you ❤️");
 }
 
 function update(){
@@ -219,20 +207,6 @@ function update(){
   requestAnimationFrame(update);
 }
 
-/* 🌹 falling petals */
-function createPetal(){
-  const petal=document.createElement("div");
-  petal.className="petal";
-
-  petal.style.left=Math.random()*100+"vw";
-  petal.style.animationDuration=4+Math.random()*4+"s";
-
-  document.body.appendChild(petal);
-
-  setTimeout(()=>petal.remove(),8000);
-}
-
-setInterval(createPetal,400);
 </script>
 
 </body>
