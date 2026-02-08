@@ -11,7 +11,7 @@
 body{
   font-family:"Poppins",sans-serif;
   background:linear-gradient(160deg,#ffe4ec,#f5e6ff,#e6f0ff);
-  overflow:hidden;
+  overflow-y:auto;
   color:#6b2d3a;
 }
 
@@ -22,7 +22,7 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:30px 20px;
+  padding:40px 20px 80px;
   text-align:center;
   position:relative;
 }
@@ -42,7 +42,7 @@ body{
   to{opacity:1;transform:scale(1.4);}
 }
 
-/* SLIDER */
+/* IMAGE SLIDER */
 .slider{
   width:90%;
   max-width:360px;
@@ -91,17 +91,40 @@ body{
   text-align:center;
 }
 
-/* BUTTON */
+/* CONTINUE BUTTON — glowing heartbeat */
 button{
-  margin-top:25px;
-  padding:14px 34px;
+  margin-top:30px;
+  margin-bottom:20px;
+  padding:16px 36px;
   border:none;
-  border-radius:30px;
-  font-size:18px;
+  border-radius:40px;
+  font-size:19px;
+  font-weight:600;
   cursor:pointer;
   color:white;
   background:linear-gradient(45deg,#ff5e8a,#ff9bb3);
-  box-shadow:0 8px 20px rgba(255,100,150,.4);
+
+  box-shadow:
+    0 0 12px rgba(255,120,160,.6),
+    0 0 28px rgba(255,120,160,.35);
+
+  animation:heartbeat 1.6s infinite ease-in-out;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+button:hover{
+  transform:scale(1.08);
+  box-shadow:
+    0 0 18px rgba(255,120,160,.9),
+    0 0 40px rgba(255,120,160,.5);
+}
+
+@keyframes heartbeat{
+  0%{transform:scale(1);}
+  14%{transform:scale(1.12);}
+  28%{transform:scale(1);}
+  42%{transform:scale(1.12);}
+  70%{transform:scale(1);}
 }
 
 /* PROPOSAL */
@@ -153,12 +176,12 @@ button{
 
 <body>
 
-<!-- MUSIC -->
+<!-- Romantic Music -->
 <audio autoplay loop>
   <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1a77.mp3" type="audio/mpeg">
 </audio>
 
-<!-- STORY -->
+<!-- STORY SECTION -->
 <div class="section" id="storySection">
 
   <div class="slider">
@@ -171,7 +194,6 @@ button{
 
   <div class="story" id="storyText"></div>
 
-  <!-- CONTINUE BUTTON ALWAYS VISIBLE -->
   <button onclick="nextStory()">Continue →</button>
 </div>
 
@@ -182,7 +204,7 @@ button{
   <button class="no" id="noBtn">NO 😜</button>
 </div>
 
-<!-- RING -->
+<!-- RING FINAL -->
 <div id="ringModal">
   <div class="ring">💍</div>
   <div class="loveText">I love you forever my wife 😘❤️</div>
@@ -190,16 +212,16 @@ button{
 
 <script>
 
-/* ❤️ CORRECT STORY ORDER */
+/* Correct emotional story order */
 const texts=[
 "Some people enter your life like a moment.",
 "Some stay like a habit.",
-"And some become the reason your soul feels at home.",
 "You turned ordinary days into memories I never want to outgrow.",
 "Even silence feels kinder when it knows your name.",
 "In your laughter, I found comfort.",
 "In your presence, I found peace.",
 "In your absence, I learned how deeply I love.",
+"And some become the reason your soul feels at home.",
 "I don’t look for forever anymore, because I found it once.",
 "And in every lifetime, in every version of me… it’s you, Baby ❤️"
 ];
@@ -223,19 +245,19 @@ function nextStory(){
   }
 }
 
-/* RUNNING NO BUTTON */
+/* Running NO button */
 const noBtn=document.getElementById("noBtn");
 noBtn.onmouseover=()=>{
   noBtn.style.top=Math.random()*80+"%";
   noBtn.style.left=Math.random()*80+"%";
 };
 
-/* RING */
+/* Show ring */
 function showRing(){
   document.getElementById("ringModal").style.display="flex";
 }
 
-/* ✨ STARS */
+/* Twinkling stars */
 for(let i=0;i<60;i++){
   const s=document.createElement("div");
   s.className="star";
