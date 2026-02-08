@@ -1,73 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For My Baby ❤️</title>
 
-  <!-- Confetti library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<style>
+body{
+  margin:0;
+  font-family:"Poppins",sans-serif;
+  background:black;
+  color:white;
+  overflow:hidden;
+}
 
-  <style>
-    :root {
-      --bg1: #ffd6e7;
-      --bg2: #ffeef6;
-      --card: #ffffffcc;
-      --yes: #ff3b7a;
-      --yesHover: #ff1f68;
+.section{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+}
+
+.intro{background:linear-gradient(135deg,#ff758c,#ff7eb3);}
+
+h1{font-size:2.5rem;margin:10px 0;}
+h2{font-weight:normal;margin-bottom:20px;}
+
+button{
+  padding:14px 28px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin:10px;
+}
+
+.yes{background:#4CAF50;color:white;}
+.no{background:#ff4b5c;color:white;position:absolute;}
+
+#message{opacity:0;transition:1s;font-size:1.6rem;margin-top:20px;}
+
+.slideshow{position:relative;width:100%;height:100%;}
+.slide{position:absolute;width:100%;height:100%;object-fit:cover;opacity:0;transition:1.5s;}
+.slide.active{opacity:1;}
+
+canvas{position:fixed;top:0;left:0;pointer-events:none;}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
+</audio>
+
+<!-- Intro -->
+<div class="section intro">
+  <h1>Hi Riya ❤️</h1>
+  <h2>From Sachin</h2>
+  <button onclick="showMessage()">Tap to continue</button>
+  <div id="message">I have something special to tell you 💖</div>
+</div>
+
+<!-- Slideshow -->
+<div class="section" id="slideshowSection" style="display:none;">
+  <div class="slideshow">
+    <img class="slide active" src="photo1.jpg"/>
+    <img class="slide" src="photo2.jpg"/>
+    <img class="slide" src="photo3.jpg"/>
+  </div>
+</div>
+
+<!-- Proposal -->
+<div class="section" id="proposalSection" style="display:none;">
+  <h1>Riya… will you be mine forever? 💍</h1>
+  <button class="yes" onclick="celebrate()">YES 💖</button>
+  <button class="no" id="noBtn">NO 😜</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+function showMessage(){
+  document.getElementById("message").style.opacity="1";
+  setTimeout(()=>{
+    document.querySelector(".intro").style.display="none";
+    document.getElementById("slideshowSection").style.display="flex";
+    startSlideshow();
+  },2000);
+}
+
+function startSlideshow(){
+  let slides=document.querySelectorAll(".slide");
+  let i=0;
+  setInterval(()=>{
+    slides[i].classList.remove("active");
+    i++;
+    if(i>=slides.length){
+      document.getElementById("slideshowSection").style.display="none";
+      document.getElementById("proposalSection").style.display="flex";
+      return;
     }
+    slides[i].classList.add("active");
+  },3000);
+}
 
-    * { box-sizing: border-box; }
+const noBtn=document.getElementById("noBtn");
+if(noBtn){
+  noBtn.addEventListener("mouseover",()=>{
+    noBtn.style.top=Math.random()*80+"%";
+    noBtn.style.left=Math.random()*80+"%";
+  });
+}
 
-    body {
-      margin: 0;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      font-family: system-ui, sans-serif;
-      overflow: hidden;
-      padding: 16px;
-    }
+function celebrate(){
+  startConfetti();
+  alert("Yay! I love you my baby 😘❤️");
+}
 
-    /* FULL-SCREEN CONFETTI CANVAS */
-    #confettiCanvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 9999;
-    }
+/* Confetti */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-    .card {
-      width: min(720px, 92vw);
-      padding: 26px 22px;
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 18px 60px rgba(0,0,0,.15);
-    }
+let pieces=[];
 
-    .art {
-      width: min(260px, 80vw);
-      margin: 0 auto 10px;
-      display: block;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
-    }
+function startConfetti(){
+  for(let i=0;i<150;i++){
+    pieces.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*6+2
+    });
+  }
+  requestAnimationFrame(update);
+}
 
-    h1 {
-      font-size: clamp(26px, 4vw, 44px);
-      margin: 12px 0 18px;
-    }
+function update(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  pieces.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y+=2;
+    if(p.y>canvas.height)p.y=0;
+  });
+  requestAnimationFrame(update);
+}
+</script>
 
-    .button-zone {
-      position: relative;
-      width: min(520px, 92%);
-      height: 150px;
-      margin: 0 auto;
-      touch-action: none;
+</body>
+</html>      touch-action: none;
     }
 
     button {
