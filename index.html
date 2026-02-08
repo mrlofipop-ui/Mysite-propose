@@ -1,3 +1,5 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,22 +8,11 @@
 <title>For My Love ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins, sans-serif;}
 
 body{
-  font-family: "Poppins", sans-serif;
   overflow:hidden;
-  background: linear-gradient(135deg,#ffd6e7,#d7e9ff);
-}
-
-/* ---------- STARS ---------- */
-.stars{
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  background:url("https://i.ibb.co/7QpKsCX/stars.gif") center/cover;
-  opacity:.35;
+  background:linear-gradient(135deg,#ffd6e7,#d7e9ff);
 }
 
 /* ---------- PAGE ---------- */
@@ -40,36 +31,32 @@ body{
 
 .hidden{opacity:0;pointer-events:none;}
 
-/* ---------- IMAGE CARD ---------- */
+/* ---------- IMAGE ---------- */
 .image-box{
   width:90%;
   max-width:340px;
   height:55vh;
-  border-radius:30px;
+  border-radius:28px;
+  overflow:hidden;
+  background:rgba(255,255,255,.4);
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(255,255,255,0.35);
-  backdrop-filter:blur(12px);
-  box-shadow:0 20px 40px rgba(0,0,0,.15);
-  overflow:hidden;
 }
 
 .image-box img{
   width:100%;
   height:100%;
   object-fit:contain;
-  object-position:center;
-  border-radius:24px;
 }
 
 /* ---------- HEART ---------- */
 .heart{
   font-size:40px;
-  margin:18px 0;
+  margin:15px 0;
   animation:beat 1.2s infinite;
 }
-
 @keyframes beat{
   0%,100%{transform:scale(1);}
   50%{transform:scale(1.15);}
@@ -79,64 +66,81 @@ body{
 .story{
   font-size:22px;
   color:#6b2c3b;
-  line-height:1.4;
-  max-width:320px;
   margin-bottom:20px;
+  max-width:320px;
 }
 
-/* ---------- CONTINUE BUTTON ---------- */
+/* ---------- CONTINUE ---------- */
 .continue{
-  padding:16px 34px;
+  padding:15px 34px;
   border:none;
   border-radius:40px;
   font-size:18px;
-  color:white;
+  color:#fff;
   background:linear-gradient(135deg,#ff7aa2,#ff3d6e);
   box-shadow:0 0 18px rgba(255,80,120,.6);
   animation:pulse 1.6s infinite;
 }
-
 @keyframes pulse{
-  0%,100%{transform:scale(1);box-shadow:0 0 18px rgba(255,80,120,.6);}
-  50%{transform:scale(1.08);box-shadow:0 0 30px rgba(255,80,120,1);}
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.08);}
 }
 
 /* ---------- PROPOSAL ---------- */
 .proposal h1{
-  font-size:32px;
-  margin-bottom:20px;
+  font-size:30px;
   color:#7a1f3d;
+  margin-bottom:30px;
 }
 
+.buttons{
+  position:relative;
+  width:260px;
+  height:120px;
+}
+
+.yes,.no{
+  position:absolute;
+  padding:14px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.yes{
+  left:10%;
+  background:#ff4d6d;
+  color:white;
+}
+
+.no{
+  right:10%;
+  background:#ddd;
+}
+
+/* ---------- FINAL ---------- */
 .ring{
-  font-size:70px;
-  animation:openRing 1.2s ease forwards;
+  font-size:80px;
+  animation:ring 1s ease forwards;
+}
+@keyframes ring{
+  from{transform:scale(0) rotate(-180deg);}
+  to{transform:scale(1) rotate(0);}
 }
 
-@keyframes openRing{
-  0%{transform:scale(0) rotate(-180deg);}
-  100%{transform:scale(1) rotate(0);}
-}
-
-.love-msg{
+.love{
   font-size:26px;
   margin-top:20px;
-  color:#fff;
-  text-shadow:0 0 12px rgba(255,255,255,.9);
+  color:white;
+  text-shadow:0 0 12px #fff;
 }
 </style>
 </head>
 
 <body>
 
-<div class="stars"></div>
-
-<!-- MUSIC -->
-<audio autoplay loop>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav">
-</audio>
-
-<!-- STORY PAGE -->
+<!-- STORY -->
 <div class="page" id="storyPage">
 
   <div class="image-box">
@@ -152,26 +156,30 @@ body{
   <button class="continue" onclick="next()">Continue →</button>
 </div>
 
-<!-- PROPOSAL PAGE -->
+<!-- PROPOSAL -->
 <div class="page hidden proposal" id="proposalPage">
   <h1>Will you be mine forever? 💍</h1>
-  <button class="continue" onclick="showLove()">YES ❤️</button>
+
+  <div class="buttons">
+    <button class="yes" onclick="showLove()">YES ❤️</button>
+    <button class="no" id="noBtn">NO 😜</button>
+  </div>
 </div>
 
-<!-- FINAL LOVE MESSAGE -->
+<!-- FINAL LOVE -->
 <div class="page hidden" id="lovePage">
   <div class="ring">💍</div>
-  <div class="love-msg">I love you forever my wife 😘❤️</div>
+  <div class="love">I love you forever my wife 😘❤️</div>
 </div>
 
 <script>
-const photos = [
+const photos=[
 "20260124_142938.jpg",
 "20260124_144923.jpg",
 "20260124_144942.jpg"
 ];
 
-const texts = [
+const texts=[
 "Some people enter your life like a moment.",
 "Some stay like a habit.",
 "Even silence feels kinder when it knows your name.",
@@ -181,35 +189,30 @@ const texts = [
 "And in every lifetime… it’s you. ❤️"
 ];
 
-let i = 0;
+let i=0;
 
 function next(){
   i++;
-
-  if(i < texts.length){
-    document.getElementById("text").innerText = texts[i];
-    document.getElementById("photo").src = photos[i % photos.length];
-  } else {
-    document.getElementById("storyPage").classList.add("hidden");
-    document.getElementById("proposalPage").classList.remove("hidden");
+  if(i<texts.length){
+    text.innerText=texts[i];
+    photo.src=photos[i%photos.length];
+  }else{
+    storyPage.classList.add("hidden");
+    proposalPage.classList.remove("hidden");
   }
 }
 
 function showLove(){
-  document.getElementById("proposalPage").classList.add("hidden");
-  document.getElementById("lovePage").classList.remove("hidden");
+  proposalPage.classList.add("hidden");
+  lovePage.classList.remove("hidden");
 }
 
-/* ---------- SWIPE SUPPORT ---------- */
-let startX = 0;
+/* RUNNING NO BUTTON 😂 */
+const noBtn=document.getElementById("noBtn");
 
-document.addEventListener("touchstart", e=>{
-  startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend", e=>{
-  let endX = e.changedTouches[0].clientX;
-  if(startX - endX > 50) next();
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.top=Math.random()*80+"px";
+  noBtn.style.left=Math.random()*160+"px";
 });
 </script>
 
