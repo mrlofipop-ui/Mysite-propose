@@ -1,256 +1,216 @@
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Baby ❤️</title>
+<title>For My Love ❤️</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  font-family:"Poppins",sans-serif;
-  background:linear-gradient(160deg,#ffe4ec,#f5e6ff,#e6f0ff);
-  color:#6b2d3a;
-  overflow-x:hidden;
-}
-
-/* SECTION — perfect mobile fit */
-.section{
-  height:100dvh;              /* 👈 FIXED mobile viewport */
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;     /* 👈 keeps content visible */
-  padding:16px;
-  text-align:center;
-}
-
-/* IMAGE */
-.slider{
-  width:85%;
-  max-width:320px;
-  height:42dvh;               /* 👈 smaller so button visible */
-  border-radius:24px;
+  font-family: "Poppins", sans-serif;
   overflow:hidden;
-  box-shadow:0 20px 40px rgba(255,120,160,.35);
-  position:relative;
+  background: linear-gradient(135deg,#ffd6e7,#d7e9ff);
 }
 
-.slide{
+/* ---------- STARS ---------- */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  background:url("https://i.ibb.co/7QpKsCX/stars.gif") center/cover;
+  opacity:.35;
+}
+
+/* ---------- PAGE ---------- */
+.page{
   position:absolute;
   width:100%;
   height:100%;
-  object-fit:cover;
-  opacity:0;
-  transition:1s ease;
-}
-.slide.active{opacity:1;}
-
-/* HEART */
-.heart{
-  font-size:36px;
-  margin:12px 0 6px;
-  animation:beat 1.2s infinite;
-}
-@keyframes beat{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.2);}
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  transition:.6s;
 }
 
-/* STORY TEXT */
-.story{
-  font-size:20px;
-  line-height:1.5;
+.hidden{opacity:0;pointer-events:none;}
+
+/* ---------- IMAGE CARD ---------- */
+.image-box{
+  width:90%;
   max-width:340px;
-  min-height:70px;      /* 👈 prevents jump */
+  height:55vh;
+  border-radius:30px;
   display:flex;
   align-items:center;
   justify-content:center;
+  background:rgba(255,255,255,0.35);
+  backdrop-filter:blur(12px);
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  overflow:hidden;
 }
 
-/* CONTINUE BUTTON — always visible */
-button{
-  margin-top:12px;
-  padding:14px 32px;
-  border:none;
-  border-radius:40px;
-  font-size:18px;
-  font-weight:600;
-  cursor:pointer;
-  color:white;
-  background:linear-gradient(45deg,#ff5e8a,#ff9bb3);
-
-  box-shadow:
-    0 0 10px rgba(255,120,160,.6),
-    0 0 24px rgba(255,120,160,.3);
-
-  animation:heartbeat 1.6s infinite ease-in-out;
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  border-radius:24px;
 }
 
-@keyframes heartbeat{
-  0%{transform:scale(1);}
-  14%{transform:scale(1.1);}
-  28%{transform:scale(1);}
-  42%{transform:scale(1.1);}
-  70%{transform:scale(1);}
+/* ---------- HEART ---------- */
+.heart{
+  font-size:40px;
+  margin:18px 0;
+  animation:beat 1.2s infinite;
 }
 
-/* PROPOSAL */
-#proposal{
-  display:none;
+@keyframes beat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.15);}
 }
-#proposal h1{
-  font-size:28px;
+
+/* ---------- TEXT ---------- */
+.story{
+  font-size:22px;
+  color:#6b2c3b;
+  line-height:1.4;
+  max-width:320px;
   margin-bottom:20px;
 }
 
-/* RUNNING NO */
-.no{
-  position:absolute;
-  background:#ddd;
-  color:#333;
+/* ---------- CONTINUE BUTTON ---------- */
+.continue{
+  padding:16px 34px;
+  border:none;
+  border-radius:40px;
+  font-size:18px;
+  color:white;
+  background:linear-gradient(135deg,#ff7aa2,#ff3d6e);
+  box-shadow:0 0 18px rgba(255,80,120,.6);
+  animation:pulse 1.6s infinite;
 }
 
-/* RING MODAL */
-#ringModal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:999;
+@keyframes pulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 18px rgba(255,80,120,.6);}
+  50%{transform:scale(1.08);box-shadow:0 0 30px rgba(255,80,120,1);}
+}
+
+/* ---------- PROPOSAL ---------- */
+.proposal h1{
+  font-size:32px;
+  margin-bottom:20px;
+  color:#7a1f3d;
 }
 
 .ring{
-  font-size:90px;
-  animation:openRing 1.5s ease forwards;
+  font-size:70px;
+  animation:openRing 1.2s ease forwards;
 }
+
 @keyframes openRing{
-  0%{transform:scale(.2) rotate(-180deg);opacity:0;}
-  100%{transform:scale(1) rotate(0);opacity:1;}
+  0%{transform:scale(0) rotate(-180deg);}
+  100%{transform:scale(1) rotate(0);}
 }
 
-.loveText{
-  color:white;
-  font-size:28px;
+.love-msg{
+  font-size:26px;
   margin-top:20px;
-  text-align:center;
-  opacity:0;
-  animation:fadeIn 2s forwards 1s;
-}
-@keyframes fadeIn{to{opacity:1;}}
-
-/* STARS */
-.star{
-  position:fixed;
-  width:3px;
-  height:3px;
-  background:white;
-  border-radius:50%;
-  opacity:.7;
-  animation:twinkle 2s infinite alternate;
-}
-@keyframes twinkle{
-  from{opacity:.2;transform:scale(.8);}
-  to{opacity:1;transform:scale(1.4);}
+  color:#fff;
+  text-shadow:0 0 12px rgba(255,255,255,.9);
 }
 </style>
 </head>
 
 <body>
 
+<div class="stars"></div>
+
 <!-- MUSIC -->
 <audio autoplay loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1a77.mp3" type="audio/mpeg">
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav">
 </audio>
 
-<!-- STORY -->
-<div class="section" id="storySection">
+<!-- STORY PAGE -->
+<div class="page" id="storyPage">
 
-  <div class="slider">
-    <img class="slide active" src="20260124_142938.jpg">
-    <img class="slide" src="20260124_144923.jpg">
-    <img class="slide" src="20260124_144942.jpg">
+  <div class="image-box">
+    <img id="photo" src="20260124_142938.jpg">
   </div>
 
   <div class="heart">❤️</div>
 
-  <div class="story" id="storyText"></div>
+  <div class="story" id="text">
+    Some people enter your life like a moment.
+  </div>
 
-  <button onclick="nextStory()">Continue →</button>
+  <button class="continue" onclick="next()">Continue →</button>
 </div>
 
-<!-- PROPOSAL -->
-<div class="section" id="proposal">
+<!-- PROPOSAL PAGE -->
+<div class="page hidden proposal" id="proposalPage">
   <h1>Will you be mine forever? 💍</h1>
-  <button onclick="showRing()">YES 💖</button>
-  <button class="no" id="noBtn">NO 😜</button>
+  <button class="continue" onclick="showLove()">YES ❤️</button>
 </div>
 
-<!-- FINAL -->
-<div id="ringModal">
+<!-- FINAL LOVE MESSAGE -->
+<div class="page hidden" id="lovePage">
   <div class="ring">💍</div>
-  <div class="loveText">I love you forever my wife 😘❤️</div>
+  <div class="love-msg">I love you forever my wife 😘❤️</div>
 </div>
 
 <script>
-const texts=[
-"Some people enter your life like a moment.",
-"Some stay like a habit.",
-"You turned ordinary days into memories I never want to outgrow.",
-"Even silence feels kinder when it knows your name.",
-"In your laughter, I found comfort.",
-"In your presence, I found peace.",
-"In your absence, I learned how deeply I love.",
-"And some become the reason your soul feels at home.",
-"I don’t look for forever anymore, because I found it once.",
-"And in every lifetime, in every version of me… it’s you, Baby ❤️"
+const photos = [
+"20260124_142938.jpg",
+"20260124_144923.jpg",
+"20260124_144942.jpg"
 ];
 
-let index=0;
-const storyText=document.getElementById("storyText");
-storyText.innerText=texts[0];
+const texts = [
+"Some people enter your life like a moment.",
+"Some stay like a habit.",
+"Even silence feels kinder when it knows your name.",
+"And some become the reason your soul feels at home.",
+"In your laughter, I found comfort.",
+"In your presence, I found peace.",
+"And in every lifetime… it’s you. ❤️"
+];
 
-function nextStory(){
-  const slides=document.querySelectorAll(".slide");
-  slides[index % slides.length].classList.remove("active");
-  index++;
+let i = 0;
 
-  if(index < texts.length){
-    slides[index % slides.length].classList.add("active");
-    storyText.innerText=texts[index];
-  }else{
-    document.getElementById("storySection").style.display="none";
-    document.getElementById("proposal").style.display="flex";
+function next(){
+  i++;
+
+  if(i < texts.length){
+    document.getElementById("text").innerText = texts[i];
+    document.getElementById("photo").src = photos[i % photos.length];
+  } else {
+    document.getElementById("storyPage").classList.add("hidden");
+    document.getElementById("proposalPage").classList.remove("hidden");
   }
 }
 
-/* RUNNING NO */
-const noBtn=document.getElementById("noBtn");
-noBtn.onmouseover=()=>{
-  noBtn.style.top=Math.random()*80+"%";
-  noBtn.style.left=Math.random()*80+"%";
-};
-
-/* RING */
-function showRing(){
-  document.getElementById("ringModal").style.display="flex";
+function showLove(){
+  document.getElementById("proposalPage").classList.add("hidden");
+  document.getElementById("lovePage").classList.remove("hidden");
 }
 
-/* STARS */
-for(let i=0;i<50;i++){
-  const s=document.createElement("div");
-  s.className="star";
-  s.style.top=Math.random()*100+"vh";
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=(1+Math.random()*2)+"s";
-  document.body.appendChild(s);
-}
+/* ---------- SWIPE SUPPORT ---------- */
+let startX = 0;
+
+document.addEventListener("touchstart", e=>{
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e=>{
+  let endX = e.changedTouches[0].clientX;
+  if(startX - endX > 50) next();
+});
 </script>
 
 </body>
