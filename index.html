@@ -1,3 +1,5 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +13,7 @@
 body{
   font-family:"Poppins",sans-serif;
   background:linear-gradient(160deg,#ffe4ec,#f5e6ff,#e6f0ff);
-  overflow-x:hidden;
+  overflow:hidden;
   color:#6b2d3a;
 }
 
@@ -24,6 +26,22 @@ body{
   justify-content:center;
   padding:30px 20px;
   text-align:center;
+  position:relative;
+}
+
+/* GLOWING STARS */
+.star{
+  position:fixed;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  opacity:.7;
+  animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{
+  from{opacity:.2;transform:scale(.8);}
+  to{opacity:1;transform:scale(1.4);}
 }
 
 /* IMAGE SLIDER */
@@ -65,11 +83,14 @@ body{
 /* STORY TEXT */
 .story{
   max-width:380px;
-  font-size:20px;
+  font-size:22px;
   line-height:1.6;
   margin-top:10px;
-  min-height:90px;
-  padding:0 10px;
+  min-height:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 
 /* BUTTON */
@@ -87,7 +108,7 @@ button{
 
 /* PROPOSAL */
 #proposal h1{
-  font-size:30px;
+  font-size:32px;
   margin-bottom:20px;
 }
 
@@ -102,7 +123,7 @@ button{
 #ringModal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.75);
   display:none;
   align-items:center;
   justify-content:center;
@@ -111,7 +132,7 @@ button{
 }
 
 .ring{
-  font-size:80px;
+  font-size:90px;
   animation:openRing 1.5s ease forwards;
 }
 
@@ -122,27 +143,23 @@ button{
 
 .loveText{
   color:white;
-  font-size:28px;
+  font-size:32px;
   margin-top:20px;
+  text-align:center;
   animation:fadeIn 2s ease forwards;
   opacity:0;
 }
 
-@keyframes fadeIn{
-  to{opacity:1;}
-}
-
-/* CONFETTI */
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  pointer-events:none;
-}
+@keyframes fadeIn{to{opacity:1;}}
 </style>
 </head>
 
 <body>
+
+<!-- BACKGROUND MUSIC -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1a77.mp3" type="audio/mpeg">
+</audio>
 
 <!-- STORY SECTION -->
 <div class="section" id="storySection">
@@ -160,7 +177,6 @@ canvas{
   <button onclick="nextStory()">Continue →</button>
 </div>
 
-
 <!-- PROPOSAL -->
 <div class="section" id="proposal" style="display:none;">
   <h1>Will you be mine forever? 💍</h1>
@@ -168,19 +184,16 @@ canvas{
   <button class="no" id="noBtn">NO 😜</button>
 </div>
 
-
-<!-- RING ANIMATION MODAL -->
+<!-- RING MODAL -->
 <div id="ringModal">
   <div class="ring">💍</div>
   <div class="loveText">I love you forever my wife 😘❤️</div>
 </div>
 
-<canvas id="confetti"></canvas>
-
 <script>
 
-/* FULL LOVE STORY TEXTS */
-const texts = [
+/* LOVE STORY TEXTS */
+const texts=[
 "You turned ordinary days into memories I never want to outgrow.",
 "Some stay like a habit.",
 "Even silence feels kinder when it knows your name.",
@@ -193,68 +206,53 @@ const texts = [
 "In your presence, I found peace."
 ];
 
-let index = 0;
-document.getElementById("storyText").innerText = texts[0];
+let index=0;
+const storyText=document.getElementById("storyText");
+storyText.innerText=texts[0];
 
 function nextStory(){
-
-  const slides = document.querySelectorAll(".slide");
-  slides[index % slides.length].classList.remove("active");
-
+  const slides=document.querySelectorAll(".slide");
+  slides[index%slides.length].classList.remove("active");
   index++;
 
-  if(index < texts.length){
-    slides[index % slides.length].classList.add("active");
-    document.getElementById("storyText").innerText = texts[index];
+  if(index<texts.length){
+    slides[index%slides.length].classList.add("active");
+    storyText.innerText=texts[index];
   }else{
     document.getElementById("storySection").style.display="none";
     document.getElementById("proposal").style.display="flex";
   }
 }
 
-/* RUNNING NO BUTTON */
-const noBtn = document.getElementById("noBtn");
-noBtn.onmouseover = () => {
-  noBtn.style.top = Math.random()*80+"%";
-  noBtn.style.left = Math.random()*80+"%";
+/* SWIPE GESTURE */
+let startX=0;
+document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+document.addEventListener("touchend",e=>{
+  let diff=startX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50) nextStory();
+});
+
+/* RUNNING NO */
+const noBtn=document.getElementById("noBtn");
+noBtn.onmouseover=()=>{
+  noBtn.style.top=Math.random()*80+"%";
+  noBtn.style.left=Math.random()*80+"%";
 };
 
-/* RING + CONFETTI */
-const canvas=document.getElementById("confetti");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let pieces=[];
-
+/* RING */
 function showRing(){
   document.getElementById("ringModal").style.display="flex";
-
-  for(let i=0;i<160;i++){
-    pieces.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height,
-      r:Math.random()*6+2
-    });
-  }
-  requestAnimationFrame(update);
 }
 
-function update(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="white";
-
-  pieces.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-    p.y+=2;
-    if(p.y>canvas.height) p.y=0;
-  });
-
-  requestAnimationFrame(update);
+/* GLOWING STARS */
+for(let i=0;i<60;i++){
+  const s=document.createElement("div");
+  s.className="star";
+  s.style.top=Math.random()*100+"vh";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDuration=(1+Math.random()*2)+"s";
+  document.body.appendChild(s);
 }
-
 </script>
 
 </body>
