@@ -51,21 +51,18 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;}
 <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav">
 </audio>
 
-<!-- Intro -->
 <div class="section intro">
 <h1>Hi Riya ❤️</h1>
 <h2>From Sachin</h2>
 <button onclick="start()">Tap to continue</button>
 </div>
 
-<!-- Slideshow -->
 <div class="section" id="slides" style="display:none;">
 <img class="slide active" src="20260124_142938.jpg">
 <img class="slide" src="20260124_144923.jpg">
 <img class="slide" src="20260124_144942.jpg">
 </div>
 
-<!-- Proposal -->
 <div class="section" id="proposal" style="display:none;">
 <h1>Riya… will you be mine forever? 💍</h1>
 <button class="yes" onclick="celebrate()">YES 💖</button>
@@ -104,10 +101,9 @@ noBtn.onmouseover=()=>{
 
 function celebrate(){
   startConfetti();
-  alert("Yay! I love you my baby ❤️");
+  alert("Yay! I love you ❤️");
 }
 
-/* Confetti */
 const canvas=document.getElementById("confetti");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
