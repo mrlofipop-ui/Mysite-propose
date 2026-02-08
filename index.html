@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Riya ❤️</title>
+<title>For My Baby ❤️</title>
 
 <style>
 body{
   margin:0;
-  font-family:sans-serif;
-  background:black;
+  font-family:"Poppins",sans-serif;
+  background:#000;
   color:white;
   overflow:hidden;
 }
+
+/* sections */
 .section{
   height:100vh;
   display:flex;
@@ -20,88 +22,168 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
+  padding:20px;
 }
-.intro{background:linear-gradient(135deg,#ff758c,#ff7eb3);}
+
+.intro{
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+}
+
+/* buttons */
 button{
   padding:14px 28px;
   font-size:18px;
   border:none;
   border-radius:30px;
   cursor:pointer;
-  margin:10px;
+  margin-top:20px;
 }
+
 .yes{background:#4CAF50;color:white;}
-.no{background:#ff4b5c;color:white;position:absolute;}
+.no{
+  background:#ff4b5c;
+  color:white;
+  position:absolute;
+}
+
+/* romantic image slider */
+.slider{
+  position:relative;
+  width:90%;
+  max-width:360px;
+  height:70vh;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 0 40px rgba(255,120,160,.5);
+}
+
 .slide{
   position:absolute;
   width:100%;
   height:100%;
   object-fit:cover;
   opacity:0;
-  transition:1.5s;
+  transition:1.5s ease;
 }
+
 .slide.active{opacity:1;}
-canvas{position:fixed;top:0;left:0;pointer-events:none;}
+
+/* romantic text */
+.love-text{
+  margin-top:18px;
+  font-size:18px;
+  line-height:1.6;
+  max-width:320px;
+  color:#ffdbe6;
+  animation:fadeIn 2s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* confetti */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+
+/* 🌹 Falling petals */
+.petal{
+  position:fixed;
+  top:-40px;
+  width:24px;
+  height:24px;
+  background-image:url("https://pngimg.com/uploads/rose_petals/rose_petals_PNG24.png");
+  background-size:cover;
+  pointer-events:none;
+  animation:fall linear forwards;
+  z-index:9999;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-40px) rotate(0deg); opacity:1;}
+  100%{transform:translateY(110vh) rotate(360deg); opacity:.9;}
+}
 </style>
 </head>
 
 <body>
 
-<audio autoplay loop>
-<source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav">
-</audio>
-
+<!-- Intro -->
 <div class="section intro">
-<h1>Hi Riya ❤️</h1>
-<h2>From Sachin</h2>
-<button onclick="start()">Tap to continue</button>
+  <h1>Hi Riya ❤️</h1>
+  <h2>From Sachin</h2>
+  <button onclick="start()">Tap to continue</button>
 </div>
 
+<!-- Slider -->
 <div class="section" id="slides" style="display:none;">
-<img class="slide active" src="20260124_142938.jpg">
-<img class="slide" src="20260124_144923.jpg">
-<img class="slide" src="20260124_144942.jpg">
+
+  <div class="slider">
+    <img class="slide active" src="20260124_142938.jpg">
+    <img class="slide" src="20260124_144923.jpg">
+    <img class="slide" src="20260124_144942.jpg">
+  </div>
+
+  <div class="love-text">
+    Every moment with you feels like a beautiful dream 💫  
+    Your smile makes my world brighter 🌍  
+    And today… I just want to ask something from my heart ❤️
+  </div>
+
 </div>
 
+<!-- Proposal -->
 <div class="section" id="proposal" style="display:none;">
-<h1>Riya… will you be mine forever? 💍</h1>
-<button class="yes" onclick="celebrate()">YES 💖</button>
-<button class="no" id="noBtn">NO 😜</button>
+  <h1>Will you be mine forever? 💍</h1>
+  <button class="yes" onclick="celebrate()">YES 💖</button>
+  <button class="no" id="noBtn">NO 😜</button>
 </div>
 
 <canvas id="confetti"></canvas>
 
 <script>
+/* start slideshow */
 function start(){
   document.querySelector(".intro").style.display="none";
   document.getElementById("slides").style.display="flex";
   showSlides();
 }
 
+/* slide animation */
 function showSlides(){
   let slides=document.querySelectorAll(".slide");
   let i=0;
+
   setInterval(()=>{
     slides[i].classList.remove("active");
     i++;
+
     if(i>=slides.length){
       document.getElementById("slides").style.display="none";
       document.getElementById("proposal").style.display="flex";
       return;
     }
+
     slides[i].classList.add("active");
   },3000);
 }
 
+/* running NO button */
 const noBtn=document.getElementById("noBtn");
 noBtn.onmouseover=()=>{
   noBtn.style.top=Math.random()*80+"%";
   noBtn.style.left=Math.random()*80+"%";
 };
 
+/* confetti celebration */
 function celebrate(){
   startConfetti();
-  alert("Yay! I love you ❤️");
+  alert("Yay! I love you my baby ❤️");
 }
 
 const canvas=document.getElementById("confetti");
@@ -112,7 +194,7 @@ canvas.height=window.innerHeight;
 let pieces=[];
 
 function startConfetti(){
-  for(let i=0;i<150;i++){
+  for(let i=0;i<160;i++){
     pieces.push({
       x:Math.random()*canvas.width,
       y:Math.random()*canvas.height,
@@ -125,15 +207,32 @@ function startConfetti(){
 function update(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.fillStyle="white";
+
   pieces.forEach(p=>{
     ctx.beginPath();
     ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
     ctx.fill();
     p.y+=2;
-    if(p.y>canvas.height)p.y=0;
+    if(p.y>canvas.height) p.y=0;
   });
+
   requestAnimationFrame(update);
 }
+
+/* 🌹 falling petals */
+function createPetal(){
+  const petal=document.createElement("div");
+  petal.className="petal";
+
+  petal.style.left=Math.random()*100+"vw";
+  petal.style.animationDuration=4+Math.random()*4+"s";
+
+  document.body.appendChild(petal);
+
+  setTimeout(()=>petal.remove(),8000);
+}
+
+setInterval(createPetal,400);
 </script>
 
 </body>
